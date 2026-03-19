@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 st.title("💍 Wedding Data Analysis Dashboard")
 
 # Load data
-df = pd.read_csv("wedding.csv")
+df = pd.read_csv("Indian_Weddings_.csv")
 
 # Sidebar filters
 st.sidebar.header("🔍 Filter Data")
