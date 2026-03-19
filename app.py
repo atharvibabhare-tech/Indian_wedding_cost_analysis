@@ -13,6 +13,7 @@ df = pd.read_csv("Indian_Weddings_.csv")
 df.columns = df.columns.str.strip()
 df.columns = df.columns.str.replace('/', '_')
 df.columns = df.columns.str.replace(' ', '_')
+df.columns = df.columns.str.replace('////',' ')
 
 # Sidebar filters
 st.sidebar.header("🔍 Filter Data")
