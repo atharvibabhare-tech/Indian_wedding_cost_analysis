@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
+import seaborn as sb
 import matplotlib.pyplot as plt
 
 # Title
@@ -49,7 +49,7 @@ st.pyplot(fig2)
 # Histogram
 st.subheader("📊 Cost Distribution")
 fig3, ax3 = plt.subplots()
-sns.histplot(df['Cost_of_Type'], bins=10, kde=True, color='blue', ax=ax3)
+sb.histplot(df['Cost_of_Type'], bins=10, kde=True, color='blue', ax=ax3)
 st.pyplot(fig3)
 
 # Footer
