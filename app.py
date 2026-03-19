@@ -9,10 +9,15 @@ st.title("💍 Wedding Data Analysis Dashboard")
 # Load data
 df = pd.read_csv("Indian_Weddings_.csv")
 
+# CLEAN COLUMNS
+df.columns = df.columns.str.strip()
+df.columns = df.columns.str.replace('/', '_')
+df.columns = df.columns.str.replace(' ', '_')
+
 # Sidebar filters
 st.sidebar.header("🔍 Filter Data")
 
-wedding_Type = st.sidebar.selectbox("Select Wedding Type", df['Wedding_Type'].unique())
+wedding_type = st.sidebar.selectbox("Select Wedding Type", df['Wedding_Type'].unique())
 place = st.sidebar.selectbox("Select Place", df['Place'].unique())
 decor_cat = st.sidebar.selectbox("Select Decor Category", df['Decor_Category'].unique())
 
@@ -38,10 +43,10 @@ plt.title("Average Cost by Wedding Type")
 st.pyplot(fig)
 
 # Pie Chart
-st.subheader("🥧 Cost Distribution by Place")
+st.subheader("🥧 Top 5 Cost Distribution by Place")
 place_cost = df.groupby('Place')['Cost_of_Type'].mean().nlargest(5)
 
-fig2, ax2 = plt.subplots()
+fig2, ax2 = plt.subplots(figsize=(6,6))
 place_cost.plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax2)
 plt.ylabel('')
 st.pyplot(fig2)
@@ -53,4 +58,4 @@ sb.histplot(df['Cost_of_Type'], bins=10, kde=True, color='blue', ax=ax3)
 st.pyplot(fig3)
 
 # Footer
-st.write("Created by Atharvi")
+st.write("Created by Atharvi 💙")
