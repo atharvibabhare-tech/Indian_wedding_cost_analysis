@@ -12,7 +12,7 @@ df = pd.read_csv("Indian_Weddings_.csv")
 # Sidebar filters
 st.sidebar.header("🔍 Filter Data")
 
-wedding_type = st.sidebar.selectbox("Select Wedding Type", df['Wedding_Type'].unique())
+wedding_Type = st.sidebar.selectbox("Select Wedding Type", df['Wedding_Type'].unique())
 place = st.sidebar.selectbox("Select Place", df['Place'].unique())
 decor_cat = st.sidebar.selectbox("Select Decor Category", df['Decor_Category'].unique())
 
