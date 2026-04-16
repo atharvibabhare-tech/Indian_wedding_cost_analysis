@@ -9,7 +9,7 @@ import numpy as np
 # ⚙️ PAGE CONFIG
 # =======================
 st.set_page_config(
-    page_title="💍 Indian Wedding Analytics",
+    page_title="Indian Wedding Analytics 🫶🏻",
     page_icon="💍",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -35,7 +35,6 @@ st.markdown("""
     --ink:         #1c1410;
     --muted:       #7a6a62;
     --white:       #ffffff;
-    --shadow:      rgba(100, 50, 30, 0.12);
 }
 
 /* ── GLOBAL ── */
