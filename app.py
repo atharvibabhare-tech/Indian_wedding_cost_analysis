@@ -25,7 +25,13 @@ df['Wedding_Type'] = (
         'Farmhouse Weddings': 'Farmhouse Wedding'
     })
 )
-
+df['Location'] = (
+    df['Location']
+    .str.replace(r'[/]', '', regex=True)     # remove ///
+    .str.replace(r'\\xc2', '', regex=True)   # remove xc2
+    .str.strip()                             # remove spaces
+    .str.title()                             # proper format
+)
 # Sidebar filters
 st.sidebar.header("🔍 Filter Data")
 
