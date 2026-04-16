@@ -171,8 +171,7 @@ col1, col2 = st.columns(2)
 
 with col1:
   st.subheader("📊 Avg Cost by Wedding Type")
-
-```
+    
 wt_cost = (
     filtered_df.groupby('Wedding_Type')['Cost_of_Type']
     .mean()
@@ -197,7 +196,6 @@ st.pyplot(fig)
 with col2:
   st.subheader("🥧 Top 5 Cost by Place")
 
-```
 place_cost = (
     filtered_df.groupby('Place')['Cost_of_Type']
     .mean()
@@ -215,7 +213,6 @@ place_cost.plot(
 plt.ylabel('')
 plt.title("Top 5 Places by Cost", fontweight='bold')
 st.pyplot(fig2)
-```
 
 # =======================
 
