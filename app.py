@@ -118,16 +118,18 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg { fill: var(--gold-
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 3.2rem;
-    font-weight: 600;
-    color: #ffffff;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.45);
-    line-height: 1.1;
-    margin: 0 0 0.5rem;
+    font-weight: 700;
+    color: #fef3c7;  /* soft gold */
+    text-shadow: 
+        0 3px 15px rgba(0,0,0,0.8),
+        0 0 10px rgba(201,168,76,0.6);
 }
 .hero-title em {
     font-style: italic;
-    color: #f5d07a;
-    text-shadow: 0 2px 16px rgba(245,208,122,0.5);
+    color: #ffd700;  /* bright gold */
+    text-shadow: 
+        0 0 12px rgba(255,215,0,0.8),
+        0 0 25px rgba(255,215,0,0.5);
 }
 .hero-sub {
     font-size: 0.88rem;
