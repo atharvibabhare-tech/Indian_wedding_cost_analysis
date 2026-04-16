@@ -14,6 +14,17 @@ df.columns = df.columns.str.strip()
 df.columns = df.columns.str.replace('/', '_')
 df.columns = df.columns.str.replace(' ', '_')
 df.columns = df.columns.str.replace('////',' ')
+df['Wedding_Type'] = (
+    df['Wedding_Type']
+    .str.replace(r'[/]', '', regex=True)   # remove ///
+    .str.strip()                           # remove spaces
+    .str.title()                           # proper format
+    .replace({
+        'Destination Weddings': 'Destination Wedding',
+        'Temple Weddings': 'Temple Wedding',
+        'Farmhouse Weddings': 'Farmhouse Wedding'
+    })
+)
 
 # Sidebar filters
 st.sidebar.header("🔍 Filter Data")
