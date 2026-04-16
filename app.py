@@ -44,7 +44,7 @@ st.markdown("Elegant insights into wedding trends and costs")
 
 @st.cache_data
 def load_data():
-return pd.read_csv("Indian_Weddings_.csv")
+    return pd.read_csv("Indian_Weddings_.csv")
 
 df = load_data()
 
