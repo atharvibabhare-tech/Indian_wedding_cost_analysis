@@ -211,10 +211,10 @@ place_cost.plot(
     colormap='Blues',  # Changed from 'coolwarm' to 'Blues'
     wedgeprops={'edgecolor': 'white', 'linewidth': 1.5} # Added linewidth for better separation
 )
-
-    plt.ylabel('')
-    plt.title("Top 5 Places by Cost", fontweight='bold')
-    st.pyplot(fig2)
+plt.ylabel('')
+plt.title("Top 5 Places by Cost", fontweight='bold')
+  
+st.pyplot(fig2)
 
 # =======================
 # 📊 HISTOGRAM
