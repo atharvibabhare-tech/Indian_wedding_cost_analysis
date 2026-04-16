@@ -55,12 +55,11 @@ df = load_data()
 # =======================
 
 df.columns = (
-df.columns
-.str.strip()
-.str.replace('/', '*')
-.str.replace(' ', '*')
+    df.columns
+    .str.strip()
+    .str.replace('/', '_')
+    .str.replace(' ', '_')
 )
-
 for col in df.select_dtypes(include='object').columns:
    df[col] = (
       df[col]
