@@ -119,18 +119,20 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg { fill: var(--gold-
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: 3.2rem;
-    font-weight: 300;
-    color: #fdf8f2;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.45);
     line-height: 1.1;
     margin: 0 0 0.5rem;
 }
 .hero-title em {
     font-style: italic;
-    color: var(--gold);
+    color: #f5d07a;
+    text-shadow: 0 2px 16px rgba(245,208,122,0.5);
 }
 .hero-sub {
     font-size: 0.88rem;
-    color: rgba(245,237,224,0.65);
+    color: rgba(255,245,230,0.82);
     letter-spacing: 0.04em;
     font-weight: 300;
 }
@@ -140,6 +142,52 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg { fill: var(--gold-
     background: linear-gradient(90deg, var(--gold), transparent);
     margin: 1.2rem 0;
     border: none;
+}
+
+/* ── HERO BUTTONS ── */
+.hero-btn-row {
+    display: flex;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+    flex-wrap: wrap;
+}
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+}
+.hero-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+.hero-btn-primary {
+    background: linear-gradient(135deg, #c9a84c, #e8c96a);
+    color: #1c1410;
+    border: none;
+    box-shadow: 0 3px 14px rgba(201,168,76,0.45);
+}
+.hero-btn-outline {
+    background: rgba(255,255,255,0.08);
+    color: #fdf8f2;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(4px);
+}
+.hero-btn-outline:hover { background: rgba(255,255,255,0.16); }
+.hero-btn-rose {
+    background: linear-gradient(135deg, #c9826b, #e09a85);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 3px 14px rgba(201,130,107,0.4);
 }
 
 /* ── KPI CARDS ── */
@@ -390,6 +438,10 @@ if decor_cat != "All":
 # =======================
 # 🏠 HERO SECTION
 # =======================
+# Button state for scroll targeting
+if 'scroll_to' not in st.session_state:
+    st.session_state['scroll_to'] = None
+
 st.markdown("""
 <div class="hero-wrapper">
     <div class="hero-ornament">💍</div>
@@ -397,7 +449,57 @@ st.markdown("""
     <h1 class="hero-title">Where <em>Data</em> Meets<br>Sacred Celebrations</h1>
     <hr class="hero-divider">
     <p class="hero-sub">Explore costs, decor patterns, and venue insights across India's most celebrated wedding styles</p>
+    <div class="hero-btn-row">
+        <span class="hero-btn hero-btn-primary">📊 View Charts</span>
+        <span class="hero-btn hero-btn-rose">📋 Browse Data</span>
+        <span class="hero-btn hero-btn-outline">💡 Cost Insights</span>
+    </div>
 </div>
+""", unsafe_allow_html=True)
+
+# Real Streamlit action buttons below hero
+col_b1, col_b2, col_b3, _ = st.columns([1, 1, 1, 4])
+with col_b1:
+    if st.button("📊 View Charts", key="btn_charts", use_container_width=True):
+        st.session_state['scroll_to'] = 'charts'
+with col_b2:
+    if st.button("📋 Browse Data", key="btn_data", use_container_width=True):
+        st.session_state['scroll_to'] = 'data'
+with col_b3:
+    if st.button("💡 Cost Insights", key="btn_insights", use_container_width=True):
+        st.session_state['scroll_to'] = 'insights'
+
+st.markdown("""
+<style>
+div[data-testid="column"] .stButton > button {
+    background: linear-gradient(135deg, #c9a84c, #e8c96a);
+    color: #1c1410 !important;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 3px 12px rgba(201,168,76,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+div[data-testid="column"]:nth-child(2) .stButton > button {
+    background: linear-gradient(135deg, #c9826b, #e09a85) !important;
+    color: #fff !important;
+    box-shadow: 0 3px 12px rgba(201,130,107,0.35);
+}
+div[data-testid="column"]:nth-child(3) .stButton > button {
+    background: rgba(28,20,16,0.92) !important;
+    color: #fdf8f2 !important;
+    border: 1.5px solid rgba(201,168,76,0.5) !important;
+}
+div[data-testid="column"] .stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+</style>
 """, unsafe_allow_html=True)
 
 # =======================
@@ -436,6 +538,10 @@ st.markdown(f"""
 # =======================
 # 📄 DATA TABLE
 # =======================
+st.markdown('<div id="section-data"></div>', unsafe_allow_html=True)
+if st.session_state.get('scroll_to') == 'data':
+    st.markdown('<script>document.getElementById("section-data").scrollIntoView({behavior:"smooth"});</script>', unsafe_allow_html=True)
+
 st.markdown("""
 <div class="section-head">
     <span class="section-head-title">📋 Filtered Dataset</span>
@@ -455,6 +561,10 @@ st.dataframe(
 # =======================
 # 📊 CHARTS — ROW 1
 # =======================
+st.markdown('<div id="section-charts"></div>', unsafe_allow_html=True)
+if st.session_state.get('scroll_to') == 'charts':
+    st.markdown('<script>document.getElementById("section-charts").scrollIntoView({behavior:"smooth"});</script>', unsafe_allow_html=True)
+
 st.markdown("""
 <div class="section-head">
     <span class="section-head-title">📊 Cost Analysis</span>
@@ -595,6 +705,10 @@ with col4:
 # =======================
 # 📊 FULL-WIDTH — BOXPLOT
 # =======================
+st.markdown('<div id="section-insights"></div>', unsafe_allow_html=True)
+if st.session_state.get('scroll_to') == 'insights':
+    st.markdown('<script>document.getElementById("section-insights").scrollIntoView({behavior:"smooth"});</script>', unsafe_allow_html=True)
+
 st.markdown("""
 <div class="section-head">
     <span class="section-head-title">📦 Cost Spread</span>
