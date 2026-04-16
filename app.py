@@ -81,22 +81,16 @@ section[data-testid="stSidebar"] [data-baseweb="select"] svg { fill: var(--gold-
 }
 
 /* ── HERO HEADER ── */
-.hero-wrapper {
-    position: relative;
-    background: linear-gradient(120deg, #1c1410 0%, #3b1f17 50%, #6b2737 100%);
-    border-radius: 20px;
-    padding: 3rem 3.5rem;
-    margin-bottom: 2.2rem;
-    overflow: hidden;
-}
-.hero-wrapper::before {
+.hero-wrapper::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        radial-gradient(ellipse 60% 80% at 85% 50%, rgba(201,168,76,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 15% 20%, rgba(201,130,107,0.15) 0%, transparent 70%);
-    pointer-events: none;
+    background: rgba(0,0,0,0.35);  /* dark overlay */
+    z-index: 0;
+}
+.hero-wrapper * {
+    position: relative;
+    z-index: 1;
 }
 .hero-ornament {
     position: absolute;
