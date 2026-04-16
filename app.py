@@ -69,6 +69,7 @@ for col in df.select_dtypes(include='object').columns:
      .str.strip()
      .str.title()
    )
+df.columns = df.columns.str.strip()
 
 df['Wedding_Type'] = df['Wedding_Type'].replace({
 'Destination Weddings': 'Destination Wedding',
