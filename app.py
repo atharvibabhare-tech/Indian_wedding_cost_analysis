@@ -189,7 +189,6 @@ wt_cost.plot(
 plt.xticks(rotation=45)
 plt.title("Average Cost by Wedding Type", fontweight='bold')
 st.pyplot(fig)
-```
 
 # PIE CHART
 
