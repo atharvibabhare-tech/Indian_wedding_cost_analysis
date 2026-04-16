@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 st.title("💍 Wedding Data Analysis Dashboard")
 
 # Load data
-df = pd.read_csv("Indian_Weddings_.csv")
+df = pd.read_csv("wedding_cost(1).ipynb")
 
 # CLEAN COLUMNS
 df.columns = df.columns.str.strip()
