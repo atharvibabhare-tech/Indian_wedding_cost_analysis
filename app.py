@@ -62,13 +62,13 @@ df.columns
 )
 
 for col in df.select_dtypes(include='object').columns:
-df[col] = (
-     df[col]
-    .str.replace(r'[/]', '', regex=True)
-    .str.replace(r'\xc2', '', regex=True)
-    .str.strip()
-    .str.title()
-      )
+   df[col] = (
+      df[col]
+     .str.replace(r'[/]', '', regex=True)
+     .str.replace(r'\xc2', '', regex=True)
+     .str.strip()
+     .str.title()
+   )
 
 df['Wedding_Type'] = df['Wedding_Type'].replace({
 'Destination Weddings': 'Destination Wedding',
