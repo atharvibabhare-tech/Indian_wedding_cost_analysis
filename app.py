@@ -1,19 +1,32 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sb
+import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Title
-st.title("💍 Wedding Data Analysis Dashboard")
+# =======================
+# ⚙️ PAGE CONFIG
+# =======================
+st.set_page_config(page_title="Wedding Dashboard", layout="wide")
 
-# Load data
-df = pd.read_csv("Indian_Weddings_.csv")
+# =======================
+# 🎯 TITLE
+# =======================
+st.title("💍 Wedding Data Analysis Dashboard")
+st.markdown("Analyze wedding trends, costs, and preferences across India")
+
+# =======================
+# 📂 LOAD DATA
+# =======================
+@st.cache_data
+def load_data():
+    df = pd.read_csv("Indian_Weddings_.csv")
+    return df
+
+df = load_data()
 
 # =======================
 # 🔧 CLEANING
 # =======================
-
-# Clean column names
 df.columns = (
     df.columns
     .str.strip()
@@ -21,17 +34,15 @@ df.columns = (
     .str.replace(' ', '_')
 )
 
-# Clean all text columns
 for col in df.select_dtypes(include='object').columns:
     df[col] = (
         df[col]
-        .str.replace(r'[/]', '', regex=True)      # remove ///
-        .str.replace(r'\\xc2', '', regex=True)    # remove xc2
-        .str.strip()                              # remove spaces
-        .str.title()                              # proper format
+        .str.replace(r'[/]', '', regex=True)
+        .str.replace(r'\\xc2', '', regex=True)
+        .str.strip()
+        .str.title()
     )
 
-# Fix specific values
 df['Wedding_Type'] = df['Wedding_Type'].replace({
     'Destination Weddings': 'Destination Wedding',
     'Temple Weddings': 'Temple Wedding',
@@ -39,30 +50,28 @@ df['Wedding_Type'] = df['Wedding_Type'].replace({
 })
 
 # =======================
-# 🔍 SIDEBAR FILTERS
+# 🔍 SIDEBAR
 # =======================
-
-st.sidebar.header("🔍 Filter Data")
+st.sidebar.title("🔍 Filters")
 
 wedding_type = st.sidebar.selectbox(
-    "Select Wedding Type",
+    "Wedding Type",
     ["All"] + sorted(df['Wedding_Type'].dropna().unique())
 )
 
 place = st.sidebar.selectbox(
-    "Select Place",
+    "Place",
     ["All"] + sorted(df['Place'].dropna().unique())
 )
 
 decor_cat = st.sidebar.selectbox(
-    "Select Decor Category",
+    "Decor Category",
     ["All"] + sorted(df['Decor_Category'].dropna().unique())
 )
 
 # =======================
-# 📊 FILTER LOGIC
+# 📊 FILTER DATA
 # =======================
-
 filtered_df = df.copy()
 
 if wedding_type != "All":
@@ -75,51 +84,89 @@ if decor_cat != "All":
     filtered_df = filtered_df[filtered_df['Decor_Category'] == decor_cat]
 
 # =======================
-# 📄 SHOW DATA
+# 📊 KPI CARDS
 # =======================
+col1, col2, col3 = st.columns(3)
 
+col1.metric("💒 Total Weddings", len(filtered_df))
+col2.metric("📍 Unique Places", filtered_df['Place'].nunique())
+col3.metric("💰 Avg Cost", round(filtered_df['Cost_of_Type'].mean(), 2))
+
+st.markdown("---")
+
+# =======================
+# 📄 DATA TABLE
+# =======================
 st.subheader("📄 Filtered Data")
-st.write(filtered_df)
+st.dataframe(filtered_df)
 
 # =======================
-# 📊 BAR PLOT
+# 📊 CHARTS (SIDE BY SIDE)
 # =======================
+col1, col2 = st.columns(2)
 
-st.subheader("📊 Average Cost by Wedding Type")
+# BAR CHART
+with col1:
+    st.subheader("📊 Avg Cost by Wedding Type")
 
-wt_cost = df.groupby('Wedding_Type')['Cost_of_Type'].mean().sort_values(ascending=False)
+    wt_cost = (
+        filtered_df.groupby('Wedding_Type')['Cost_of_Type']
+        .mean()
+        .sort_values(ascending=False)
+    )
 
-fig, ax = plt.subplots()
-wt_cost.plot(kind='bar', ax=ax)
-plt.xticks(rotation=45)
-plt.title("Average Cost by Wedding Type")
-st.pyplot(fig)
+    fig, ax = plt.subplots()
+    wt_cost.plot(
+        kind='bar',
+        color='#2e7d32',
+        edgecolor='black',
+        ax=ax
+    )
 
-# =======================
-# 🥧 PIE CHART
-# =======================
+    plt.xticks(rotation=45)
+    plt.title("Average Cost by Wedding Type", fontweight='bold')
+    st.pyplot(fig)
 
-st.subheader("🥧 Top 5 Cost Distribution by Place")
+# PIE CHART
+with col2:
+    st.subheader("🥧 Top 5 Cost by Place")
 
-place_cost = df.groupby('Place')['Cost_of_Type'].mean().nlargest(5)
+    place_cost = (
+        filtered_df.groupby('Place')['Cost_of_Type']
+        .mean()
+        .nlargest(5)
+    )
 
-fig2, ax2 = plt.subplots()
-place_cost.plot(kind='pie', autopct='%1.1f%%', ax=ax2)
-plt.ylabel('')
-st.pyplot(fig2)
+    fig2, ax2 = plt.subplots()
+    place_cost.plot(
+        kind='pie',
+        autopct='%1.1f%%',
+        colormap='Greens',
+        wedgeprops={'edgecolor':'white'}
+    )
+
+    plt.ylabel('')
+    plt.title("Top 5 Places by Cost", fontweight='bold')
+    st.pyplot(fig2)
 
 # =======================
 # 📊 HISTOGRAM
 # =======================
-
 st.subheader("📊 Cost Distribution")
 
 fig3, ax3 = plt.subplots()
-sb.histplot(df['Cost_of_Type'], bins=10, kde=True, ax=ax3)
+sns.histplot(
+    filtered_df['Cost_of_Type'],
+    bins=10,
+    kde=True,
+    color='#43a047'
+)
+
+plt.title("Cost Distribution", fontweight='bold')
 st.pyplot(fig3)
 
 # =======================
 # ❤️ FOOTER
 # =======================
-
-st.write("Created by Atharvi 💙")
+st.markdown("---")
+st.markdown("👩‍💻 Created by **Atharvi** 💙")
