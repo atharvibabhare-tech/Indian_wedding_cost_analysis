@@ -108,13 +108,13 @@ decor_cat = st.sidebar.selectbox(
 filtered_df = df.copy()
 
 if wedding_type != "All":
-filtered_df = filtered_df[filtered_df['Wedding_Type'] == wedding_type]
+  filtered_df = filtered_df[filtered_df['Wedding_Type'] == wedding_type]
 
 if place != "All":
-filtered_df = filtered_df[filtered_df['Place'] == place]
+  filtered_df = filtered_df[filtered_df['Place'] == place]
 
 if decor_cat != "All":
-filtered_df = filtered_df[filtered_df['Decor_Category'] == decor_cat]
+  filtered_df = filtered_df[filtered_df['Decor_Category'] == decor_cat]
 
 # =======================
 
@@ -170,7 +170,7 @@ col1, col2 = st.columns(2)
 # BAR CHART
 
 with col1:
-st.subheader("📊 Avg Cost by Wedding Type")
+  st.subheader("📊 Avg Cost by Wedding Type")
 
 ```
 wt_cost = (
@@ -195,7 +195,7 @@ st.pyplot(fig)
 # PIE CHART
 
 with col2:
-st.subheader("🥧 Top 5 Cost by Place")
+  st.subheader("🥧 Top 5 Cost by Place")
 
 ```
 place_cost = (
