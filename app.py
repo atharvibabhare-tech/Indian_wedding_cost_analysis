@@ -353,6 +353,14 @@ df.columns = (
     .str.replace(' ', '_')
 )
 
+df['Place'] = (
+    df['Place']
+    .str.replace(r'\\xc2', '', regex=True)   
+    .str.replace(r'Â', '', regex=True)       
+    .str.strip()
+    .str.title()
+)
+
 for col in df.select_dtypes(include='object').columns:
     df[col] = (
         df[col]
