@@ -190,7 +190,7 @@ with col1:
         ax=ax
     )
 
-    plt.xticks(rotation=45)
+    plt.xticks(rotation=90)
     plt.title("Average Cost by Wedding Type", fontweight='bold')
     st.pyplot(fig)
 
@@ -204,13 +204,13 @@ with col2:
         .nlargest(5)
     )
 
-    fig2, ax2 = plt.subplots()
-    place_cost.plot(
-        kind='pie',
-        autopct='%1.1f%%',
-        colormap='coolwarm',
-        wedgeprops={'edgecolor':'white'}
-    )
+fig2, ax2 = plt.subplots()
+place_cost.plot(
+    kind='pie',
+    autopct='%1.1f%%',
+    colormap='Blues',  # Changed from 'coolwarm' to 'Blues'
+    wedgeprops={'edgecolor': 'white', 'linewidth': 1.5} # Added linewidth for better separation
+)
 
     plt.ylabel('')
     plt.title("Top 5 Places by Cost", fontweight='bold')
