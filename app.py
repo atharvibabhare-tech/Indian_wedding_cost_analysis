@@ -85,7 +85,7 @@ df['Wedding_Type'] = df['Wedding_Type'].replace({
 st.sidebar.title("🔍 Filters")
 
 wedding_type = st.sidebar.selectbox(
-"Wedding Type",
+"Wedding_Type",
 ["All"] + sorted(df['Wedding_Type'].dropna().unique())
 )
 
@@ -95,7 +95,7 @@ place = st.sidebar.selectbox(
 )
 
 decor_cat = st.sidebar.selectbox(
-"Decor Category",
+"Decor_Category",
 ["All"] + sorted(df['Decor_Category'].dropna().unique())
 )
 
@@ -170,7 +170,7 @@ col1, col2 = st.columns(2)
 # BAR CHART
 
 with col1:
-  st.subheader("📊 Avg Cost by Wedding Type")
+  st.subheader("📊 Avg Cost by Wedding_Type")
     
 wt_cost = (
     filtered_df.groupby('Wedding_Type')['Cost_of_Type']
@@ -187,7 +187,7 @@ wt_cost.plot(
 )
 
 plt.xticks(rotation=45)
-plt.title("Average Cost by Wedding Type", fontweight='bold')
+plt.title("Average Cost by Wedding_Type", fontweight='bold')
 st.pyplot(fig)
 
 # PIE CHART
